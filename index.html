@@ -30,7 +30,7 @@ body{font-family:var(--font-sans);color:var(--color-text-primary);background:var
 .nav-links a:hover{color:var(--color-text-primary)}
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--color-primary);transition:width 0.2s}
 .nav-links a:hover::after{width:100%}
-.theme-toggle{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0}
+.theme-toggle{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;margin-left:8px}
 .theme-toggle:hover{background:var(--color-background-secondary);transform:rotate(15deg)}
 .mobile-menu-btn{display:none;width:44px;height:44px;background:transparent;border:none;cursor:pointer;padding:10px;align-items:center;justify-content:center}
 .mobile-menu-btn span{display:block;width:22px;height:2px;background:var(--color-text-primary);margin:5px 0;transition:all 0.3s}
@@ -41,8 +41,10 @@ body{font-family:var(--font-sans);color:var(--color-text-primary);background:var
 .mobile-menu-btn{display:flex;flex-direction:column}
 .nav-links{position:fixed;top:65px;left:0;right:0;bottom:0;background:var(--color-background-primary);flex-direction:column;gap:0;padding:1rem 0;transform:translateX(-100%);transition:transform 0.3s;z-index:9;overflow-y:auto}
 .nav-links.open{transform:translateX(0)}
-.nav-links a{width:100%;padding:1rem 1.5rem;font-size:15px}
-.theme-toggle{margin-left:auto}
+.nav-links a{width:100%;padding:1rem 1.5rem;font-size:15px;justify-content:flex-start;border-radius:0;border:none;border-bottom:0.5px solid var(--color-border-tertiary)}
+.theme-toggle{width:auto;height:auto;padding:1rem 1.5rem;border:none;border-bottom:0.5px solid var(--color-border-tertiary);border-radius:0;background:transparent;justify-content:flex-start;gap:10px;font-size:15px;color:var(--color-text-primary)}
+.theme-toggle:hover{background:transparent;transform:none}
+.theme-toggle::after{content:attr(data-label)}
 }
 .hero{padding:4rem 1.5rem;border-bottom:0.5px solid var(--color-border-tertiary);position:relative;overflow:hidden;min-height:auto;display:flex;flex-direction:column;justify-content:center}
 .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:700px;height:700px;background:radial-gradient(circle,rgba(24,95,165,0.15) 0%,rgba(29,158,117,0.05) 50%,transparent 70%);pointer-events:none;animation:float 8s ease-in-out infinite}
@@ -251,9 +253,6 @@ h1.hero-name{font-size:28px}
   <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
-  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">
-    <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-  </button>
   <div class="nav-links" id="navLinks">
     <a onclick="navigateTo('about')">About</a>
     <a onclick="navigateTo('services')">Services</a>
@@ -262,6 +261,9 @@ h1.hero-name{font-size:28px}
     <a onclick="navigateTo('projects')">Projects</a>
     <a onclick="navigateTo('testimonials')">Testimonials</a>
     <a onclick="navigateTo('contact')">Contact</a>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode" data-label="Dark Mode">
+        <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
   </div>
 </div>
 
@@ -648,10 +650,10 @@ h1.hero-name{font-size:28px}
 </div>
 
 <script>
-function toggleTheme(){const html=document.documentElement;const isDark=html.getAttribute('data-theme')==='dark';html.setAttribute('data-theme',isDark?null:'dark');localStorage.setItem('theme',isDark?null:'dark');const icon=document.getElementById('themeIcon');icon.innerHTML=isDark?'<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>':'<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>'}
+function toggleTheme(){const html=document.documentElement;const isDark=html.getAttribute('data-theme')==='dark';html.setAttribute('data-theme',isDark?null:'dark');localStorage.setItem('theme',isDark?null:'dark');const icon=document.getElementById('themeIcon');icon.innerHTML=isDark?'<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>':'<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';const btn=document.querySelector('.theme-toggle');btn.setAttribute('data-label',isDark?'Light Mode':'Dark Mode')}
 function toggleMobileMenu(){const nav=document.getElementById('navLinks');const btn=document.getElementById('mobileMenuBtn');nav.classList.toggle('open');btn.classList.toggle('active')}
 function navigateTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});document.getElementById('navLinks').classList.remove('open');document.getElementById('mobileMenuBtn').classList.remove('active')}
-if(localStorage.getItem('theme')){document.documentElement.setAttribute('data-theme','dark')}
+if(localStorage.getItem('theme')){document.documentElement.setAttribute('data-theme','dark');document.querySelector('.theme-toggle').setAttribute('data-label','Light Mode')}
 window.addEventListener('scroll',()=>{const winScroll=document.body.scrollTop||document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=(winScroll/height)*100;document.getElementById('scrollProgress').style.width=scrolled+'%';const backToTop=document.getElementById('backToTop');backToTop.classList.toggle('visible',winScroll>500)});
 const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');const bars=entry.target.querySelectorAll('.skill-bar');bars.forEach(bar=>{bar.style.width=bar.style.width||bar.getAttribute('style').match(/width:(\d+)/)[1]+'%'})}})},{threshold:0.1});
 document.querySelectorAll('.section').forEach(section=>observer.observe(section));
